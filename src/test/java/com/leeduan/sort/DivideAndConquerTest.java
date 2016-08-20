@@ -24,7 +24,7 @@ public class DivideAndConquerTest {
     }
 
     @Test
-    public void testInversions() {
+    public void testMergeSortInversions() {
         final MergeSorter<Integer> smallIntSort = new MergeSorter<>(Arrays.asList(1, 3, 5, 2, 4, 6),
                         new IntegerOperator());
         assertEquals("Number of inversions is 3", new Long(3L), smallIntSort.getInversions());

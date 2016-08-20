@@ -10,11 +10,8 @@ import java.util.Objects;
  * Class that sorts a list of numbers using merge sort algorithm.
  * While sorting, keep a count of the number of inversions.
  */
-public class MergeSorter<T> {
-    private final List<T> sortedList;
+public class MergeSorter<T> extends BaseSorter<T> implements Sorter<T> {
     private final RationalOperator<T> operator;
-    private final Long executionTime;
-
     private Long inversions;
 
     public MergeSorter(List<T> list, RationalOperator<T> operator) {
@@ -28,32 +25,11 @@ public class MergeSorter<T> {
         final long startTime = System.currentTimeMillis();
         this.sortedList = mergeSort(list);
         final long endTime = System.currentTimeMillis();
-
         this.executionTime = endTime - startTime;
-    }
-
-    public List<T> getSortedList() {
-        return sortedList;
     }
 
     public Long getInversions() {
         return inversions;
-    }
-
-    public Long getExecutionTime() {
-        return executionTime;
-    }
-
-    public T getFirst() {
-        return isNotEmpty() ? sortedList.get(0) : null;
-    }
-
-    public T getLast() {
-        return isNotEmpty() ? sortedList.get(sortedList.size() - 1) : null;
-    }
-
-    private boolean isNotEmpty() {
-        return !sortedList.isEmpty();
     }
 
     private List<T> mergeSort(List<T> list) {
