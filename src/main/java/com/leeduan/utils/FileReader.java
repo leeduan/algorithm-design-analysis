@@ -24,8 +24,8 @@ public class FileReader {
         final List<T> list = new ArrayList<>();
         try {
             final Scanner scanner = new Scanner(new File(path.getFile()));
-            while (scanner.hasNextInt()) {
-                list.add(transformer.transform(scanner.next()));
+            while (scanner.hasNextLine()) {
+                list.add(transformer.transform(scanner.nextLine()));
             }
         } catch (IOException e) {
             throw new RuntimeException("File could not be read");
