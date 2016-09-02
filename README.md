@@ -2,11 +2,7 @@
 
 ### Summary
 
-This repository contains programming assignments for `Algorithms: Design and Analysis`, taught by Tim Roughgarden. All sample code written in `Java`.
-
-### Credit
-
-Course provided by [coursera](https://www.coursera.org/learn/algorithm-design-analysis).
+This repository contains programming implementations for `Algorithms: Design and Analysis` for personal review.
 
 ### Setup
 
