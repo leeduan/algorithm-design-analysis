@@ -24,12 +24,12 @@ public class KargerTest {
 
     @Test
     public void testNodeCount() {
-        assertTrue(new Graph<>(graphData).getVertices().size() == 4);
+        assertTrue(new UndirectedGraph<>(graphData).getVertices().size() == 4);
     }
 
     @Test
     public void testEdgeCount() {
-        assertTrue(new Graph<>(graphData).getEdges().size() == 5);
+        assertTrue(new UndirectedGraph<>(graphData).getEdges().size() == 5);
     }
 
     @Test
