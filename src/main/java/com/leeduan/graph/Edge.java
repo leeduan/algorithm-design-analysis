@@ -14,6 +14,18 @@ interface Edge<T> {
     List<Vertex<T>> getPair();
 
     /**
+     * Return the head pair of the edge.
+     * @return
+     */
+    Vertex<T> getHead();
+
+    /**
+     * Return the tail pair of the edge.
+     * @return
+     */
+    Vertex<T> getTail();
+
+    /**
      * Return a random vertex of the edge.
      * @return
      */

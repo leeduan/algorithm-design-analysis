@@ -1,27 +1,24 @@
 package com.leeduan.graph;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Graph containing a set of vertices and its edges.
  * @param <T>
  */
-class UndirectedGraph<T> implements Graph<T> {
-    private final List<Vertex<T>> vertices;
-    private final List<Edge<T>> edges;
+class UndirectedGraph<T> extends AbstractGraph<T> implements Graph<T> {
 
     public UndirectedGraph(Map<T, List<T>> graphData) {
-        this.vertices = new ArrayList<>();
-        this.edges = new ArrayList<>();
+        super();
+        Objects.requireNonNull(graphData, "Graph data cannot be null");
 
         // add every vertex to vertices list
-        graphData.entrySet().forEach(e -> this.vertices.add(new Vertex<>(e.getKey())));
+        graphData.keySet().stream().distinct().forEach(k -> this.verticesMap.put(k, new UndirectedVertex<>(k)));
 
-        for (Vertex<T> vertex : this.vertices) {
+        // add every vertex to vertices list
+        for (Vertex<T> vertex : this.verticesMap.values()) {
             // add edges to vertex
             for (T value : graphData.get(vertex.getValue())) {
                 final Vertex<T> adjVertex = getVertex(value)
@@ -40,37 +37,6 @@ class UndirectedGraph<T> implements Graph<T> {
     }
 
     @Override
-    public Optional<Vertex<T>> getVertex(T value) {
-        Objects.requireNonNull(value, "Value cannot be null");
-
-        return this.vertices.stream().filter(v -> v.getValue().equals(value)).findFirst();
-    }
-
-    @Override
-    public List<Vertex<T>> getVertices() {
-        return this.vertices;
-    }
-
-    @Override
-    public Optional<Edge<T>> getEdge(T value1, T value2) {
-        Objects.requireNonNull(value1, "First value cannot be null");
-        Objects.requireNonNull(value2, "Second value cannot be null");
-
-        final Vertex<T> vertex1 = getVertex(value1).orElse(null);
-        final Vertex<T> vertex2 = getVertex(value2).orElse(null);
-        if (vertex1 == null || vertex2 == null) {
-            return Optional.empty();
-        }
-
-        return this.edges.stream().filter(e -> e.contains(vertex1, vertex2)).findFirst();
-    }
-
-    @Override
-    public List<Edge<T>> getEdges() {
-        return edges;
-    }
-
-    @Override
     public void merge(Edge<T> edge) {
         Objects.requireNonNull(edge, "Edge cannot be null");
 
@@ -83,7 +49,7 @@ class UndirectedGraph<T> implements Graph<T> {
 
     private void removeEdge(Edge<T> edge, Vertex<T> fromVertex, Vertex<T> toVertex) {
         // remove from both instance vertices and edges
-        this.vertices.remove(fromVertex);
+        this.verticesMap.remove(fromVertex.getValue());
         this.edges.remove(edge);
         // remove from both edge vertices
         fromVertex.getEdges().remove(edge);
@@ -102,10 +68,5 @@ class UndirectedGraph<T> implements Graph<T> {
                 toVertex.addEdge(fromEdge);
             }
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Graph{" + "vertices=" + vertices + ", edges=" + edges + "}";
     }
 }

@@ -40,4 +40,15 @@ interface Graph<T> {
      * @param edge
      */
     void merge(Edge<T> edge);
+
+    /**
+     * Set the finishing time of a vertex.
+     * @param vertex
+     */
+    void incrementFinishingTime(Vertex<T> vertex);
+
+    /**
+     * Reset all vertexes explored as unexplored.
+     */
+    void resetExplored();
 }

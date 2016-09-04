@@ -1,47 +1,60 @@
 package com.leeduan.graph;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A vertex (node) on a graph. It points to the edges incident on it.
+ * Generic interface of a vertex.
  * @param <T>
  */
-class Vertex<T> {
-    private final T value;
-    private final List<Edge<T>> edges;
+interface Vertex<T> {
 
-    public Vertex(T value) {
-        Objects.requireNonNull(value, "Value cannot be null");
+    /**
+     * Get the value of vertex.
+     * @return
+     */
+    T getValue();
 
-        this.value = value;
-        this.edges = new ArrayList<>();
-    }
+    /**
+     * Get the edges of this vertex.
+     * @return
+     */
+    List<Edge<T>> getEdges();
 
-    public T getValue() {
-        return value;
-    }
+    /**
+     * Add an edge to this vertex.
+     * @param edge
+     */
+    void addEdge(Edge<T> edge);
 
-    public List<Edge<T>> getEdges() {
-        return edges;
-    }
+    /**
+     * Get the edge that matches this and the passed in vertex, if found.
+     * @param vertex
+     * @return
+     */
+    Optional<Edge<T>> getEdge(Vertex<T> vertex);
 
-    public void addEdge(Edge<T> edge) {
-        Objects.requireNonNull(edge, "Edge cannot be null");
+    /**
+     * Set the explored flag from boolean.
+     * @param explored
+     */
+    void setExplored(boolean explored);
 
-        this.edges.add(edge);
-    }
+    /**
+     * Get whether vertex is explored.
+     * @return
+     */
+    boolean isExplored();
 
-    public Optional<Edge<T>> getEdge(Vertex<T> vertex) {
-        Objects.requireNonNull(vertex, "Vertex cannot be null");
+    /**
+     * Set the finishing time of the vertex.
+     * @param finishingTime
+     */
+    void setFinishingTime(int finishingTime);
 
-        return this.edges.stream().filter(e -> e.contains(this, vertex)).findFirst();
-    }
-
-    @Override
-    public String toString() {
-        return "Vertex{value=" + value + "}";
-    }
+    /**
+     * Get the finishing time of the vertex.
+     * @return
+     */
+    int getFinishingTime();
 }

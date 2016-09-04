@@ -10,7 +10,7 @@ import java.util.Objects;
  * Class that sorts a list of numbers using merge sort algorithm.
  * While sorting, keep a count of the number of inversions.
  */
-public class MergeSorter<T> extends BaseSorter<T> implements Sorter<T> {
+class MergeSorter<T> extends AbstractSorter<T> implements Sorter<T> {
     private final RationalOperator<T> operator;
     private Long inversions;
 

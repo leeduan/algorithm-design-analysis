@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Container for running contraction algorithms.
+ */
 public class Contraction {
     private static final Logger log = LoggerFactory.getLogger(Contraction.class);
     private static final URL MINCUT_PATH = Contraction.class.getClassLoader().getResource("mincut.txt");
@@ -19,7 +22,7 @@ public class Contraction {
     // sample min data conversion to map
     static {
         MAP_VERTEX_ADJACENCY_LIST = new HashMap<>();
-        FileReader.lineFileScanner(MINCUT_PATH, new StringListIntTransformer()).stream()
+        FileReader.lineFileScanner(MINCUT_PATH, new StringListIntTransformer("\t")).stream()
                 .filter(l -> Objects.nonNull(l) && l.size() > 0)
                 .forEach(l -> MAP_VERTEX_ADJACENCY_LIST.put(l.get(0), l.subList(1, l.size())));
     }

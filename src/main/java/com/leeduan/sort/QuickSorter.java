@@ -12,7 +12,7 @@ import java.util.Objects;
  * Class that sorts a list of numbers using quick sort algorithm.
  * While sorting, keep a count of the number of comparisons.
  */
-public class QuickSorter<T> extends BaseSorter<T> implements Sorter<T> {
+class QuickSorter<T> extends AbstractSorter<T> implements Sorter<T> {
     private final RationalOperator<T> operator;
     private final RationalOperatorMath<T> math;
     private final Pivot pivot;

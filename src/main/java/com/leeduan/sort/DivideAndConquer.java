@@ -12,7 +12,7 @@ import java.net.URL;
 import java.util.List;
 
 /**
- * Contains programs written for week 1 of the course.
+ * Container for running divide and conquer algorithms.
  */
 public class DivideAndConquer {
     private static final Logger log = LoggerFactory.getLogger(DivideAndConquer.class);
