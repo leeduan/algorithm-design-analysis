@@ -18,43 +18,6 @@ class DirectedGraph<T extends Comparable<T>> extends AbstractGraph<T> implements
         this.edges = edges;
     }
 
-    public DirectedGraph(Map<T, List<T>> graphData) {
-        super();
-        Objects.requireNonNull(graphData, "Graph data cannot be null");
-
-        // add every vertex to vertices list
-        final long startConstructorTime = System.currentTimeMillis();
-        graphData.keySet().stream().distinct().forEach(k -> this.verticesMap.put(k, new DirectedVertex<>(k)));
-        graphData.values().stream().flatMap(List::stream).distinct()
-                .forEach(k -> this.verticesMap.putIfAbsent(k, new DirectedVertex<>(k))); //
-
-        // add every vertex to vertices list
-        for (Vertex<T> vertex : this.verticesMap.values()) {
-            final List<T> values = graphData.get(vertex.getValue());
-            if (values == null) {
-                continue;
-            }
-
-            // add edges to vertex
-            for (T value : values) {
-                final Vertex<T> adjVertex = getVertex(value)
-                        .orElseThrow(() -> new IllegalArgumentException("Could not find vertex with value " + value));
-
-                // find or else get edge
-                final Edge<T> edge = adjVertex.getEdge(vertex)
-                        .orElseGet(() -> {
-                            final Edge<T> newEdge = new DirectedEdge<>(vertex, adjVertex);
-                            adjVertex.addEdge(newEdge); // assumes no duplicates
-                            this.edges.add(newEdge);
-                            return newEdge;
-                        });
-                vertex.addEdge(edge);
-            }
-        }
-        final long endConstructorTime = System.currentTimeMillis();
-        System.out.println("Completed data to graph parsing in " + (endConstructorTime - startConstructorTime) + "ms");
-    }
-
     public DirectedVertex<T> getSourceVertex() {
         return sourceVertex;
     }

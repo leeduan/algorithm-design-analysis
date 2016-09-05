@@ -50,7 +50,7 @@ public class StrongComponents {
     }
 
     public static List<Integer> run() {
-        // programming assignment #3
+        // programming assignment #4
         final List<Integer> strongComponentsBySize = Kosaraju.strongComponentsBySize(readData());
         log.info("Strong components sorted by size {}",
                         strongComponentsBySize.subList(0, Math.min(5, strongComponentsBySize.size())));

@@ -1,11 +1,13 @@
 package com.leeduan.graph;
 
 import java.util.Objects;
+import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * Graph search algorithm implementations.
  */
-// TODO: Methods should be reviewed for generalization.
 public class GraphSearch {
 
     /**
@@ -16,23 +18,8 @@ public class GraphSearch {
      */
     public static <T extends Comparable<T>> void depthFirstSearchFinishingTimes(DirectedGraph<T> graph,
                     DirectedVertex<T> vertex) {
-        Objects.requireNonNull(graph, "Graph cannot be null");
-        Objects.requireNonNull(vertex, "Vertex cannot be null");
-        if (vertex.isExplored()) {
-            throw new IllegalArgumentException("Cannot search through explored vertex " + vertex.getValue());
-        }
-
-        vertex.setExplored(true);
-        vertex.setLeaderVertex(graph.getSourceVertex());
-        vertex.getEdges().stream()
-                .map(e -> (DirectedVertex<T>)e.getHead())
-                .filter(v -> !v.equals(vertex))
-                .forEach(v -> {
-                    if (!v.isExplored()) {
-                        depthFirstSearchFinishingTimes(graph, v);
-                    }
-                });
-        graph.incrementFinishingTime(vertex);
+        depthFirstSearch(graph, vertex, e -> (DirectedVertex<T>)e.getHead(), null,
+                (g, v) -> g.incrementFinishingTime(v));
     }
 
     /**
@@ -43,22 +30,40 @@ public class GraphSearch {
      */
     public static <T extends Comparable<T>> void depthFirstSearchLeaders(DirectedGraph<T> graph,
                     DirectedVertex<T> vertex) {
+        depthFirstSearch(graph, vertex, e -> (DirectedVertex<T>)e.getTail(),
+                (g, v) -> v.setLeaderVertex(g.getSourceVertex()), null);
+    }
+
+    /**
+     * Generic depth first search with edge to vertex function, and a pre/post bi-consumer.
+     * @param graph
+     * @param vertex
+     * @param edgeToVertexFunction
+     * @param preConsumer
+     * @param postConsumer
+     * @param <T>
+     */
+    private static <T extends Comparable<T>> void depthFirstSearch(DirectedGraph<T> graph, DirectedVertex<T> vertex,
+                    Function<Edge<T>, DirectedVertex<T>> edgeToVertexFunction,
+                    BiConsumer<DirectedGraph<T>, DirectedVertex<T>> preConsumer,
+                    BiConsumer<DirectedGraph<T>, DirectedVertex<T>> postConsumer) {
         Objects.requireNonNull(graph, "Graph cannot be null");
         Objects.requireNonNull(vertex, "Vertex cannot be null");
         if (vertex.isExplored()) {
             throw new IllegalArgumentException("Cannot search through explored vertex " + vertex.getValue());
         }
 
+        Optional.ofNullable(preConsumer).ifPresent(b -> b.accept(graph, vertex));
         vertex.setExplored(true);
-        vertex.setLeaderVertex(graph.getSourceVertex());
         vertex.getEdges().stream()
-                .map(e -> (DirectedVertex<T>)e.getTail())
+                .map(edgeToVertexFunction)
                 .filter(v -> !v.equals(vertex))
                 .forEach(v -> {
                     if (!v.isExplored()) {
-                        depthFirstSearchLeaders(graph, v);
+                        depthFirstSearch(graph, v, edgeToVertexFunction, preConsumer, postConsumer);
                     }
                 });
+        Optional.ofNullable(postConsumer).ifPresent(b -> b.accept(graph, vertex));
     }
 
 }

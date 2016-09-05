@@ -6,33 +6,39 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class KosarajuTest {
-    private Map<Integer, List<Integer>> graphData;
+    private Map<Integer, Vertex<Integer>> verticesMap;
+    private DirectedGraph<Integer> graph;
 
     @Before
     public void setup() {
-        graphData = new HashMap<>();
-        graphData.put(1, Collections.singletonList(7));
-        graphData.put(2, Collections.singletonList(5));
-        graphData.put(3, Collections.singletonList(9));
-        graphData.put(4, Collections.singletonList(1));
-        graphData.put(5, Collections.singletonList(8));
-        graphData.put(6, Arrays.asList(3, 8));
-        graphData.put(7, Arrays.asList(4, 9));
-        graphData.put(8, Collections.singletonList(2));
-        graphData.put(9, Collections.singletonList(6));
+        verticesMap = IntStream.rangeClosed(1, 9).boxed()
+                .collect(Collectors.toMap(Function.identity(), DirectedVertex::new));
+        final List<Edge<Integer>> edges = Arrays.asList(createEdge(1, 7), createEdge(2, 5), createEdge(3, 9),
+                        createEdge(4, 1), createEdge(5, 8), createEdge(6, 3), createEdge(6, 8), createEdge(7, 4),
+                        createEdge(7, 9), createEdge(8, 2), createEdge(9, 6));
+
+        graph = new DirectedGraph<>(verticesMap, edges);
+    }
+
+    private DirectedEdge<Integer> createEdge(int value1, int value2) {
+        final Vertex<Integer> vertex1 = verticesMap.get(value1);
+        final Vertex<Integer> vertex2 = verticesMap.get(value2);
+        final DirectedEdge<Integer> edge = new DirectedEdge<>(vertex1, vertex2);
+        vertex1.addEdge(edge);
+        vertex2.addEdge(edge);
+
+        return edge;
     }
 
     @Test
     public void testFinishingTimeFirstPass() {
-        DirectedGraph<Integer> graph = new DirectedGraph<>(graphData);
-
         Kosaraju.strongComponentsBySize(graph);
 
         assertEquals(Arrays.asList(7, 3, 1, 8, 2, 5, 9, 4, 6), graph.getVertices().stream()
@@ -43,8 +49,6 @@ public class KosarajuTest {
 
     @Test
     public void testLeaderSecondPass() {
-        DirectedGraph<Integer> graph = new DirectedGraph<>(graphData);
-
         assertEquals(Arrays.asList(3, 3, 3), Kosaraju.strongComponentsBySize(graph));
     }
 }

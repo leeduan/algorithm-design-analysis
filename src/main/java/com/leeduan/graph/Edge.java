@@ -58,5 +58,5 @@ interface Edge<T> {
      * @param vertex2
      * @return
      */
-    boolean contains(Vertex<T> vertex1, Vertex<T> vertex2);
+    boolean equals(Vertex<T> vertex1, Vertex<T> vertex2);
 }

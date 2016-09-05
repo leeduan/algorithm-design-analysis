@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Base edge implementation.
+ * Abstract edge implementation.
  * @param <T>
  */
 abstract class AbstractEdge<T> implements Edge<T> {
@@ -39,15 +39,8 @@ abstract class AbstractEdge<T> implements Edge<T> {
     }
 
     @Override
-    public Vertex<T> getOther(Vertex<T> one) {
-        Objects.requireNonNull(one, "One cann cannot be null");
-
-        final int index = this.pair.indexOf(one);
-        if (index < 0) {
-            throw new IllegalArgumentException("Edge does not contain vertex with value " + one.getValue());
-        }
-
-        return pair.get(1 - index); // find other pair
+    public Vertex<T> getOther(Vertex<T> oneVertex) {
+        throw new UnsupportedOperationException("Not implemented by default");
     }
 
     @Override
@@ -63,7 +56,7 @@ abstract class AbstractEdge<T> implements Edge<T> {
     }
 
     @Override
-    public boolean contains(Vertex<T> vertex1, Vertex<T> vertex2) {
+    public boolean equals(Vertex<T> vertex1, Vertex<T> vertex2) {
         Objects.requireNonNull(vertex1, "First vertex cannot be null");
         Objects.requireNonNull(vertex2, "Second vertex cannot be null");
 

@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Base vertex implementation.
+ * Abstract vertex implementation.
  * @param <T>
  */
 abstract class AbstractVertex<T> implements Vertex<T> {
@@ -43,7 +43,7 @@ abstract class AbstractVertex<T> implements Vertex<T> {
     public Optional<Edge<T>> getEdge(Vertex<T> vertex) {
         Objects.requireNonNull(vertex, "Vertex cannot be null");
 
-        return this.edges.stream().filter(e -> e.contains(this, vertex)).findFirst();
+        return this.edges.stream().filter(e -> e.equals(this, vertex)).findFirst();
     }
 
     @Override
@@ -57,13 +57,13 @@ abstract class AbstractVertex<T> implements Vertex<T> {
     }
 
     @Override
-    public int getFinishingTime() {
-        return finishingTime;
+    public void setFinishingTime(int finishingTime) {
+        this.finishingTime = finishingTime;
     }
 
     @Override
-    public void setFinishingTime(int finishingTime) {
-        this.finishingTime = finishingTime;
+    public int getFinishingTime() {
+        return finishingTime;
     }
 
     @Override

@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Base graph implementation.
+ * Abstract graph implementation.
  * @param <T>
  */
 abstract class AbstractGraph<T> implements Graph<T> {
@@ -44,7 +44,7 @@ abstract class AbstractGraph<T> implements Graph<T> {
             return Optional.empty();
         }
 
-        return this.edges.stream().filter(e -> e.contains(vertex1, vertex2)).findFirst();
+        return this.edges.stream().filter(e -> e.equals(vertex1, vertex2)).findFirst();
     }
 
     @Override
