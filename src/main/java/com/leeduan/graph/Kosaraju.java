@@ -26,6 +26,7 @@ public class Kosaraju {
         graph.resetExplored();
 
         // iterate through finishing time second, finding leaders
+        // TODO: Track finishing times through first loop, instead of sorting.
         graph.sortedVerticesByFinishingTime();
         processDepthFirstSearch(graph, (g, v) -> {
             g.setSourceVertex(v);

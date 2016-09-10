@@ -43,6 +43,7 @@ public class GraphSearch {
      * @param postConsumer
      * @param <T>
      */
+    // TODO: Implement depth first search iteratively using a stack, instead of via recursion.
     private static <T extends Comparable<T>> void depthFirstSearch(DirectedGraph<T> graph, DirectedVertex<T> vertex,
                     Function<Edge<T>, DirectedVertex<T>> edgeToVertexFunction,
                     BiConsumer<DirectedGraph<T>, DirectedVertex<T>> preConsumer,
