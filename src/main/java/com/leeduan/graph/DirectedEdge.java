@@ -10,6 +10,10 @@ class DirectedEdge<T> extends AbstractEdge<T> implements Edge<T> {
         super(tail, head);
     }
 
+    public DirectedEdge(Vertex<T> left, Vertex<T> right, int distance) {
+        super(left, right, distance);
+    }
+
     @Override
     public Vertex<T> getTail() {
         return getPair().get(0);

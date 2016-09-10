@@ -23,18 +23,6 @@ class UndirectedEdge<T> extends AbstractEdge<T> implements Edge<T> {
     }
 
     @Override
-    public Vertex<T> getOther(Vertex<T> oneVertex) {
-        Objects.requireNonNull(oneVertex, "One cannot be null");
-
-        final int index = this.pair.indexOf(oneVertex);
-        if (index < 0) {
-            throw new IllegalArgumentException("Edge does not contain vertex with value " + oneVertex.getValue());
-        }
-
-        return pair.get(1 - index); // find other pair
-    }
-
-    @Override
     public void replace(Vertex<T> fromVertex, Vertex<T> toVertex) {
         Objects.requireNonNull(fromVertex, "From vertex cannot be null");
         Objects.requireNonNull(toVertex, "To vertex cannot be null");

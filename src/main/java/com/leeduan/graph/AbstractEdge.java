@@ -47,7 +47,14 @@ abstract class AbstractEdge<T> implements Edge<T> {
 
     @Override
     public Vertex<T> getOther(Vertex<T> oneVertex) {
-        throw new UnsupportedOperationException("Not implemented by default");
+        Objects.requireNonNull(oneVertex, "One cannot be null");
+
+        final int index = this.pair.indexOf(oneVertex);
+        if (index < 0) {
+            throw new IllegalArgumentException("Edge does not contain vertex with value " + oneVertex.getValue());
+        }
+
+        return pair.get(1 - index); // find other pair
     }
 
     @Override

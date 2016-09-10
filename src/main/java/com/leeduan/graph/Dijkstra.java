@@ -3,6 +3,7 @@ package com.leeduan.graph;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Dijkstra {
@@ -15,6 +16,10 @@ public class Dijkstra {
      */
     // TODO: Implement this algorithm using more optimized heap data structure.
     public static <T> int shortestPath(Graph<T> graph, T sourceValue, T destinationValue) {
+        Objects.requireNonNull(graph, "Graph cannot be null");
+        Objects.requireNonNull(sourceValue, "Source value cannot be null");
+        Objects.requireNonNull(destinationValue, "Destination value cannot be null");
+
         final Vertex<T> sourceVertex = graph.getVertex(sourceValue)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid source value " + sourceValue));
         final Vertex<T> destinationVertex = graph.getVertex(destinationValue)
