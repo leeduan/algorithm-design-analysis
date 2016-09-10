@@ -42,7 +42,13 @@ public class Karger {
         return graph.getEdges().size();
     }
 
-    private static <T> Edge<T> pickRandomEdge(List<Edge<T>> edges) {
-        return edges.get(new Random().nextInt(edges.size()));
+    /**
+     * Pick a random object from a list.
+     * @param list
+     * @param <T>
+     * @return
+     */
+    private static <T> T pickRandomEdge(List<T> list) {
+        return list.get(new Random().nextInt(list.size()));
     }
 }

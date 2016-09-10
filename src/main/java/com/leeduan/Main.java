@@ -1,6 +1,7 @@
 package com.leeduan;
 
 import com.leeduan.graph.Contraction;
+import com.leeduan.graph.ShortestPath;
 import com.leeduan.graph.StrongComponents;
 import com.leeduan.sort.DivideAndConquer;
 
@@ -14,6 +15,7 @@ public class Main {
         DivideAndConquer.run();
         Contraction.run();
         StrongComponents.run();
+        ShortestPath.run();
     }
 
 }

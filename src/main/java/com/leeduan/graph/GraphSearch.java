@@ -1,5 +1,6 @@
 package com.leeduan.graph;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiConsumer;
@@ -18,7 +19,7 @@ public class GraphSearch {
      */
     public static <T extends Comparable<T>> void depthFirstSearchFinishingTimes(DirectedGraph<T> graph,
                     DirectedVertex<T> vertex) {
-        depthFirstSearch(graph, vertex, e -> (DirectedVertex<T>)e.getHead(), null,
+        depthFirstSearch(graph, vertex, Vertex::getTraversableEdges, e -> (DirectedVertex<T>)e.getHead(), null,
                 (g, v) -> g.incrementFinishingTime(v));
     }
 
@@ -30,7 +31,7 @@ public class GraphSearch {
      */
     public static <T extends Comparable<T>> void depthFirstSearchLeaders(DirectedGraph<T> graph,
                     DirectedVertex<T> vertex) {
-        depthFirstSearch(graph, vertex, e -> (DirectedVertex<T>)e.getTail(),
+        depthFirstSearch(graph, vertex, Vertex::getNonTraversableEdges, e -> (DirectedVertex<T>)e.getTail(),
                 (g, v) -> v.setLeaderVertex(g.getSourceVertex()), null);
     }
 
@@ -45,6 +46,7 @@ public class GraphSearch {
      */
     // TODO: Implement depth first search iteratively using a stack, instead of via recursion.
     private static <T extends Comparable<T>> void depthFirstSearch(DirectedGraph<T> graph, DirectedVertex<T> vertex,
+                    Function<Vertex<T>, List<Edge<T>>> vertexToEdgesFunction,
                     Function<Edge<T>, DirectedVertex<T>> edgeToVertexFunction,
                     BiConsumer<DirectedGraph<T>, DirectedVertex<T>> preConsumer,
                     BiConsumer<DirectedGraph<T>, DirectedVertex<T>> postConsumer) {
@@ -56,12 +58,11 @@ public class GraphSearch {
 
         Optional.ofNullable(preConsumer).ifPresent(b -> b.accept(graph, vertex));
         vertex.setExplored(true);
-        vertex.getEdges().stream()
+        vertexToEdgesFunction.apply(vertex).stream()
                 .map(edgeToVertexFunction)
-                .filter(v -> !v.equals(vertex))
                 .forEach(v -> {
                     if (!v.isExplored()) {
-                        depthFirstSearch(graph, v, edgeToVertexFunction, preConsumer, postConsumer);
+                        depthFirstSearch(graph, v, vertexToEdgesFunction, edgeToVertexFunction, preConsumer, postConsumer);
                     }
                 });
         Optional.ofNullable(postConsumer).ifPresent(b -> b.accept(graph, vertex));

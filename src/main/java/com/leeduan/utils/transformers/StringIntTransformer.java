@@ -10,5 +10,4 @@ public class StringIntTransformer implements Transformer<String, Integer> {
 
         return Integer.valueOf(input);
     }
-
 }

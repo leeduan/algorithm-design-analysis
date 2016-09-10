@@ -1,6 +1,8 @@
 package com.leeduan.graph;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * A vertex (node) on a graph. It points to the directed edges from it.
@@ -19,6 +21,17 @@ class DirectedVertex<T> extends AbstractVertex<T> implements Vertex<T> {
 
     public void setLeaderVertex(DirectedVertex<T> leaderVertex) {
         this.leaderVertex = leaderVertex;
+    }
+
+    @Override
+    public List<Edge<T>> getTraversableEdges() {
+        return getEdges().stream().filter(e -> !e.getHead().equals(this)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Edge<T>> getNonTraversableEdges() {
+        final List<Edge<T>> traversableEdges = getTraversableEdges();
+        return getEdges().stream().filter(e -> !traversableEdges.contains(e)).collect(Collectors.toList());
     }
 
     @Override

@@ -10,6 +10,11 @@ import java.util.Objects;
  */
 class UndirectedGraph<T> extends AbstractGraph<T> implements Graph<T> {
 
+    public UndirectedGraph(Map<T, Vertex<T>> verticesMap, List<Edge<T>> edges) {
+        this.verticesMap = verticesMap;
+        this.edges = edges;
+    }
+
     public UndirectedGraph(Map<T, List<T>> graphData) {
         super();
         Objects.requireNonNull(graphData, "Graph data cannot be null");

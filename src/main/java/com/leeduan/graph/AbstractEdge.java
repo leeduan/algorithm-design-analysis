@@ -10,12 +10,19 @@ import java.util.Objects;
  */
 abstract class AbstractEdge<T> implements Edge<T> {
     final List<Vertex<T>> pair;
+    int distance;
 
     public AbstractEdge(Vertex<T> left, Vertex<T> right) {
         Objects.requireNonNull(left, "Left vertex argument cannot be null");
         Objects.requireNonNull(right, "Right vertex argument cannot be null");
 
         this.pair = Arrays.asList(left, right);
+    }
+
+    public AbstractEdge(Vertex<T> left, Vertex<T> right, int distance) {
+        this(left, right);
+
+        this.distance = distance;
     }
 
     @Override
@@ -61,6 +68,11 @@ abstract class AbstractEdge<T> implements Edge<T> {
         Objects.requireNonNull(vertex2, "Second vertex cannot be null");
 
         return pair.contains(vertex1) && pair.contains(vertex2);
+    }
+
+    @Override
+    public int getDistance() {
+        return distance;
     }
 
     @Override

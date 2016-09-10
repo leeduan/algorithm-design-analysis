@@ -20,7 +20,7 @@ public class KosarajuTest {
     public void setup() {
         verticesMap = IntStream.rangeClosed(1, 9).boxed()
                 .collect(Collectors.toMap(Function.identity(), DirectedVertex::new));
-        final List<Edge<Integer>> edges = Arrays.asList(createEdge(1, 7), createEdge(2, 5), createEdge(3, 9),
+        List<Edge<Integer>> edges = Arrays.asList(createEdge(1, 7), createEdge(2, 5), createEdge(3, 9),
                         createEdge(4, 1), createEdge(5, 8), createEdge(6, 3), createEdge(6, 8), createEdge(7, 4),
                         createEdge(7, 9), createEdge(8, 2), createEdge(9, 6));
 

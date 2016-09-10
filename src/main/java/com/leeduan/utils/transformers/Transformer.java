@@ -8,5 +8,4 @@ package com.leeduan.utils.transformers;
 public interface Transformer<U, T> {
 
     T transform(U input);
-
 }

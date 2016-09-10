@@ -22,6 +22,18 @@ interface Vertex<T> {
     List<Edge<T>> getEdges();
 
     /**
+     * Get the edges this vertex can traverse to.
+     * @return
+     */
+    List<Edge<T>> getTraversableEdges();
+
+    /**
+     * Get the edges this vertex cannot traverse to.
+     * @return
+     */
+    List<Edge<T>> getNonTraversableEdges();
+
+    /**
      * Add an edge to this vertex.
      * @param edge
      */

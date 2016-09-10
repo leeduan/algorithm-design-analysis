@@ -13,6 +13,10 @@ class UndirectedEdge<T> extends AbstractEdge<T> implements Edge<T> {
         super(left, right);
     }
 
+    public UndirectedEdge(Vertex<T> left, Vertex<T> right, int distance) {
+        super(left, right, distance);
+    }
+
     @Override
     public Vertex<T> getRandom() {
         return pair.get(new Random().nextInt(pair.size()));

@@ -6,7 +6,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class StringListIntTransformer implements Transformer<String, List<Integer>> {
-
     private final String delimiter;
 
     public StringListIntTransformer(String delimiter) {
@@ -22,5 +21,4 @@ public class StringListIntTransformer implements Transformer<String, List<Intege
                 .map(Integer::valueOf)
                 .collect(Collectors.toList());
     }
-
 }

@@ -59,4 +59,9 @@ interface Edge<T> {
      * @return
      */
     boolean equals(Vertex<T> vertex1, Vertex<T> vertex2);
+
+    /**
+     * Distance between the vertices
+     */
+    int getDistance();
 }

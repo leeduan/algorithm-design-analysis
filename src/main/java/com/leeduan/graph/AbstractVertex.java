@@ -1,6 +1,7 @@
 package com.leeduan.graph;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -30,6 +31,16 @@ abstract class AbstractVertex<T> implements Vertex<T> {
     @Override
     public List<Edge<T>> getEdges() {
         return edges;
+    }
+
+    @Override
+    public List<Edge<T>> getTraversableEdges() {
+        throw new UnsupportedOperationException("Not implemented by default");
+    }
+
+    @Override
+    public List<Edge<T>> getNonTraversableEdges() {
+        throw new UnsupportedOperationException("Not implemented by default");
     }
 
     @Override
