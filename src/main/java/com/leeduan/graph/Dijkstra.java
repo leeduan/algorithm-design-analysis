@@ -9,12 +9,13 @@ import java.util.Optional;
 public class Dijkstra {
 
     /**
-     * Run Dijkstra's shortest path algorithm on a given graph.
+     * Run Dijkstra's shortest path algorithm on a given graph from a source to a destination.
      * @param graph
+     * @param sourceValue
+     * @param destinationValue
      * @param <T>
      * @return
      */
-    // TODO: Implement this algorithm using more optimized heap data structure.
     public static <T> int shortestPath(Graph<T> graph, T sourceValue, T destinationValue) {
         Objects.requireNonNull(graph, "Graph cannot be null");
         Objects.requireNonNull(sourceValue, "Source value cannot be null");
@@ -30,23 +31,13 @@ public class Dijkstra {
         xVerticesMap.put(sourceVertex, 0);
 
         while(xVerticesMap.get(destinationVertex) == null) {
-            Edge<T> greedyEdge = null;
             // find greedy score for (v, w)
-            for (Vertex<T> vertex : xVerticesMap.keySet()) {
-                final Optional<Edge<T>> edgeOpt = vertex.getTraversableEdges().stream()
-                        .filter(e -> xVerticesMap.get(e.getOther(vertex)) == null) // filter out those in x
-                        .reduce((e1, e2) -> e2.getDistance() > e1.getDistance() ? e1 : e2);
-                if (!edgeOpt.isPresent()) {
-                    continue;
-                }
-
-                greedyEdge = Optional.ofNullable(greedyEdge)
-                        .map(e -> computeDistance(xVerticesMap, e) > computeDistance(xVerticesMap, edgeOpt.get())
-                                ? edgeOpt.get() : e)
-                        .orElse(edgeOpt.get());
-            }
-
-            Optional.ofNullable(greedyEdge).orElseThrow(() -> new IllegalArgumentException("Cannot reach destination"));
+            // TODO: Implement this algorithm using more optimized heap for retrieving min distance.
+            final Edge<T> greedyEdge = xVerticesMap.keySet().stream()
+                    .flatMap(v -> v.getTraversableEdges().stream()
+                            .filter(e -> Objects.isNull(xVerticesMap.get(e.getOther(v)))))
+                    .reduce((e1, e2) -> computeDistance(xVerticesMap, e1) > computeDistance(xVerticesMap, e2) ? e2 : e1)
+                    .orElseThrow(() -> new IllegalArgumentException("Cannot reach destination"));
             addEdgeToMap(xVerticesMap, greedyEdge);
         }
 
@@ -54,7 +45,7 @@ public class Dijkstra {
     }
 
     /**
-     * Compute the distance of the edge from the souce vertex from the previously computed shortest
+     * Compute the distance of the edge from the source vertex from the previously computed shortest
      * distance to source of the vertex already in group x and the distance of the edge.
      * @param xVerticesMap
      * @param edge
