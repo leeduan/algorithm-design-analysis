@@ -40,7 +40,7 @@ public class TwoSum {
     }
 
     public static void run() {
-        // programming assignment #6
+        // programming assignment #6.1
         final Set<Long> longSet = new HashSet<>(readData());
         final long count = IntStream.rangeClosed(-10000, 10000)
                 .mapToLong(t -> twoDistinctSum(longSet, (long)t) ? 1 : 0)

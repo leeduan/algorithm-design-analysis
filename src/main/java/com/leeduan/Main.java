@@ -1,9 +1,8 @@
 package com.leeduan;
 
-import com.leeduan.graph.Contraction;
-import com.leeduan.graph.ShortestPath;
-import com.leeduan.graph.StrongComponents;
-import com.leeduan.sort.DivideAndConquer;
+import com.leeduan.graph.*;
+import com.leeduan.sort.*;
+import com.leeduan.structures.*;
 
 public class Main {
 
@@ -12,10 +11,6 @@ public class Main {
      * @param args
      */
     public static void main(String [] args) {
-        DivideAndConquer.run();
-        Contraction.run();
-        StrongComponents.run();
-        ShortestPath.run();
+        // run algorithms here
     }
-
 }
